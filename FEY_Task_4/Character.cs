@@ -14,18 +14,32 @@ namespace FEY_Task_4
 
         protected List<Buff> _buffs;
 
-        protected float _damageAmplification;
-        protected float _baseDamageAmplification = 1;
-
         public Character(int maxHealth)
         { 
             HealthComponent = new Health(maxHealth);
             _buffs = new List<Buff>();
+            Controller.Instance.OnTurn += OnTurn;
+        }
+
+        private void OnTurn()
+        {
+            _buffs.RemoveAll(x => x.RemainingTurns <= 1);
+        }
+
+        public void AddBuff(Buff buff)
+        {
+            _buffs.Add(buff);
         }
 
         public int GetTotalDamage()
         {
-            int resultDamage = 0;
+            float damageAmplification = 1f;
+            foreach(Buff buff in _buffs)
+            {
+                damageAmplification += buff.DamageAmplification;
+                damageAmplification = Math.Clamp(damageAmplification, 0f, 100f);
+            }
+            int resultDamage = (int)(_baseDamage * damageAmplification);
             return resultDamage;
         }
     }

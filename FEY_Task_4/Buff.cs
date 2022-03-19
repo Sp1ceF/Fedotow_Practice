@@ -20,7 +20,7 @@ namespace FEY_Task_4
         }
 
         public void Turn()
-        {
+        { 
             RemainingTurns--;
         }
     }

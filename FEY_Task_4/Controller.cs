@@ -12,18 +12,16 @@ namespace FEY_Task_4
         static public Controller Instance;
 
         private bool _isPlaying = true;
-
-        private Player _player;
-
-        private Enemy _enemy;
+        public PlayerClass Player { get; }
+        public EnemyClass Enemy { get; }
 
         public event Turn OnTurn;
         public Controller(int maxPlayerHealth, int maxEnemyHealth, int enemyDamage)
         {
             if (Instance == null) Instance = this;
             else throw new ArgumentException("There is 2 controller instances, but should be one");
-            _player = new Player(maxPlayerHealth);
-            _enemy = new Enemy(maxEnemyHealth,enemyDamage);
+            Player = new PlayerClass(maxPlayerHealth);
+            Enemy = new EnemyClass(maxEnemyHealth,enemyDamage);
             
         }
         public void GameLoop()
@@ -34,23 +32,87 @@ namespace FEY_Task_4
                 HandleInput(); 
                 ProceedTurn();
             }
+            Console.ReadKey();
         }
 
         private void PrintInterface()
         {
-
+            Console.Clear();
+            Console.WriteLine("================================================");
+            Console.WriteLine($"Player's remaining health : {Player.HealthComponent.CurrentHealth}");
+            Console.WriteLine($"Enemy's remaining health : {Enemy.HealthComponent.CurrentHealth}");
+            Console.WriteLine("================================================");
+            Console.WriteLine("\nAvailable spells:");
+            Console.WriteLine("1)Fireball\nDeal 50 base damage, simplest damaging skill");
+            Console.WriteLine("================================================");
+            Console.WriteLine("2)Blood Ritual\nUse your blood for ritual, deal 30% more damage, gain \"Blood offering\" buff");
+            Console.WriteLine("================================================");
+            Console.WriteLine("3)Exodia\nGain Exodia stack, 6 stacks = instant win, each exodia stack decreases outcoming damage by 10%");
+            Console.WriteLine("================================================");
+            Console.WriteLine("4)Magical Healing\nHeal for 35% of max hp, deal 34% less damage for 4 turns");
+            Console.WriteLine("================================================");
+            Console.WriteLine("5)Blood shield\nExchange \"Blood offering\" buff for magical shield that blocks all incoming damage for 1 turn,\nif cast fails - get 10% max hp damage");
+            Console.WriteLine("================================================");
+            Console.WriteLine("6)Blood orb\nExchange \"Blood offering\" buff for a magical sphere that deals 150 base damage,\nif cast fails - get 10% max hp damage");
+            Console.WriteLine("================================================");
+            Console.WriteLine("Which spell will you cast: ");
         }
 
         private void HandleInput()
         {
-
+            string input = Console.ReadLine();
+            int.TryParse(input, out int intInp);
+       
+            switch (intInp)
+            {
+                case 1:
+                    Player.FireBall();
+                    break;
+                case 2:
+                    Player.BloodRitual();
+                    break;
+                case 3:
+                    Player.Exodia();
+                    break;
+                case 4:
+                    Player.MagicalHealing();
+                    break;
+                case 5:
+                    Player.BloodShield();
+                    break;
+                case 6:
+                    Player.BloodOrb();
+                    break;
+                default:
+                    Console.WriteLine("Wrong command, try again");
+                    HandleInput();
+                    break;
+            }
         }
 
         private void ProceedTurn()
         {
-            _player.HealthComponent.GetDamage(_enemy.GetTotalDamage());
-            _enemy.HealthComponent.GetDamage(_player.GetTotalDamage());
+            Player.HealthComponent.GetDamage(Enemy.GetTotalDamage());
+            Console.WriteLine($"Player got hit by boss for {Enemy.GetTotalDamage()} damage, press any key to continue");
+            Console.ReadKey();
             OnTurn?.Invoke();
+            if(Player.HealthComponent.CurrentHealth <= 0 && Enemy.HealthComponent.CurrentHealth <= 0)
+            {
+                Console.WriteLine("Both died, nobody won");
+                _isPlaying = false;
+            }
+            else if(Player.HealthComponent.CurrentHealth <= 0)
+            {
+                Console.WriteLine("Enemy won");
+                _isPlaying = false;
+            }
+            else if (Enemy.HealthComponent.CurrentHealth <= 0)
+            {
+                Console.WriteLine("Player won");
+                _isPlaying = false;
+            }
+            
+
         }
     }
 }

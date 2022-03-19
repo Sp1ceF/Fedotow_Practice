@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FEY_Task_4
 {
-    internal class Enemy : Character
+    internal class EnemyClass : Character
     {
-        public Enemy(int maxHealth, int damage): base(maxHealth)
+        public EnemyClass(int maxHealth, int damage): base(maxHealth)
         {
             _baseDamage = damage;
         }
