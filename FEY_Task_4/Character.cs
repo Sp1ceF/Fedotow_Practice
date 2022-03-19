@@ -18,7 +18,7 @@ namespace FEY_Task_4
         { 
             HealthComponent = new Health(maxHealth);
             _buffs = new List<Buff>();
-            Controller.Instance.OnTurn += OnTurn;
+            Controller.Instance.OnPlayersTurn += OnTurn;
         }
 
         private void OnTurn()

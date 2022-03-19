@@ -16,7 +16,7 @@ namespace FEY_Task_4
                 Name = name;
             DamageAmplification = damageAmp;
             RemainingTurns = totalTurns;
-            Controller.Instance.OnTurn += Turn;
+            Controller.Instance.OnPlayersTurn += Turn;
         }
 
         public void Turn()
