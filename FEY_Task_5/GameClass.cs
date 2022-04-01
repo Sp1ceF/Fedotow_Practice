@@ -14,7 +14,7 @@ namespace FEY_Task_5
     }
     internal class GameClass
     {
-        const int MAX_ENEMY_COUNT = 0;
+        const int MAX_ENEMY_COUNT = 10;
         const int MAX_PLAYER_HEALTH = 200;
         const int DEFAULT_DAMAGE = 40;
         const string MAP_NAME = "level";
