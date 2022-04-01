@@ -11,20 +11,19 @@ namespace FEY_Task_1
             int desiredCrystals;
             int crystalCount = 0;
             Console.WriteLine("How many gold do you have?");
-            if (!int.TryParse(Console.ReadLine(), out playerBalance))
+            while(!int.TryParse(Console.ReadLine(), out playerBalance) || playerBalance < 0)
             {
-                Console.WriteLine("Balance input is not correct");
-                Console.ReadKey();
-                return;
-            };
+                Console.WriteLine("Balance input is not correct, try again");
+            }
+        
             Console.WriteLine("How many crystals would you like to buy");
-            if (!int.TryParse(Console.ReadLine(), out desiredCrystals))
+            while (!int.TryParse(Console.ReadLine(), out desiredCrystals) || desiredCrystals <0)
             {
-                Console.WriteLine("Crystal count input is not correct");
-                Console.ReadKey();
-                return;
+                Console.WriteLine("Crystal count input is not correct, try again");
             };
-            while(crystalCount < desiredCrystals && playerBalance - crystalPrice>=0 )
+           
+
+            while (crystalCount < desiredCrystals && playerBalance - crystalPrice>=0 )
             {
                 playerBalance -= crystalPrice;
                 crystalCount++;
