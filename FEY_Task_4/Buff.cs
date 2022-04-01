@@ -10,12 +10,12 @@ namespace FEY_Task_4
     {
         public string Name { get; }
         public float DamageAmplification { get;}
-        public byte RemainingTurns { get; private set; }
-        public Buff(string name, float damageAmp, byte totalTurns)
+        public int RemainingTurns { get; private set; }
+        public Buff(string name, float damageAmp, int totalTurns)
         {
                 Name = name;
             DamageAmplification = damageAmp;
-            RemainingTurns = totalTurns;
+            RemainingTurns = totalTurns*2;
             Controller.Instance.OnPlayersTurn += Turn;
         }
 

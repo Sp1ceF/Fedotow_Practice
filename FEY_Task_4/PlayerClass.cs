@@ -41,7 +41,7 @@ namespace FEY_Task_4
             {
                 Console.WriteLine($"Applied {totalExodias + 1} Exodia stacks, annihilating the enemy");
                 _buffs.RemoveAll(s => s.Name == "Exodia");
-                _baseDamage = 9999999;
+                Controller.Instance.Enemy.HealthComponent.GetDamage(999999999);
             }
         }
         //Decrease outcoming damage by 34% for 4 turns, but heal for 35%

@@ -9,7 +9,7 @@ namespace FEY_Task_7
         {
             Random rng = new Random();
             Console.WriteLine("Введите кол-во элементов в массиве:");
-            if(!int.TryParse(Console.ReadLine(), out int totalElems))
+            if(!int.TryParse(Console.ReadLine(), out int totalElems) || totalElems<=0)
             {
                 Console.WriteLine("Вы ввели неправильное значение");
                 return;
